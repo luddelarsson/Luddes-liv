@@ -172,9 +172,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
     <p style="font-size:12px;color:var(--text2);text-align:center;margin-top:8px" id="bors-status"></p>
     <div class="section-title">Inställningar</div>
     <div class="add-form">
-      <div class="help" style="margin-bottom:10px">Klistra in din gratis <a href="https://finnhub.io/register" target="_blank" rel="noopener">Finnhub API-nyckel</a> för live-kurser. Gratisnivån täcker bäst amerikanska aktier &amp; ETF:er. Symboler utan live-data visar ditt senast sparade värde.</div>
-      <input type="text" id="finnhub-key" placeholder="Finnhub API-nyckel">
-      <button class="btn-add" onclick="saveKey()">Spara nyckel</button>
+      <div id="key-input">
+        <div class="help" style="margin-bottom:10px">Klistra in din gratis <a href="https://finnhub.io/register" target="_blank" rel="noopener">Finnhub API-nyckel</a> för live-kurser. Gratisnivån täcker bäst amerikanska aktier &amp; ETF:er. Symboler utan live-data visar ditt senast sparade värde.</div>
+        <input type="password" id="finnhub-key" placeholder="Finnhub API-nyckel" autocomplete="off">
+        <button class="btn-add" onclick="saveKey()">Spara nyckel</button>
+      </div>
+      <div id="key-set" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div><div class="stock-name">🔑 API-nyckel sparad</div><div class="stock-ticker" id="key-masked"></div></div>
+          <span class="badge-live">live på</span>
+        </div>
+        <button class="btn-ghost" onclick="changeKey()">Ändra nyckel</button>
+        <button class="btn-ghost" style="margin-top:8px" onclick="removeKey()">Ta bort nyckel</button>
+      </div>
     </div>
     <div class="section-title">Lägg till värdepapper</div>
     <div class="add-form">
@@ -334,13 +344,27 @@ function renderStocks(){
   document.getElementById('stocks-full').innerHTML=stocks.map((s,i)=>
     '<div class="card-row"><div style="flex:1">'+stockRowInner(s)+'</div><span class="del-btn" onclick="deleteStock(\''+s.id+'\')">×</span></div>'
   ).join('')||'<div class="empty">Inga värdepapper</div>';
-  document.getElementById('finnhub-key').value=finnhubKey;
+  renderKeyUI();
 }
+function renderKeyUI(){
+  const inp=document.getElementById('key-input'),set=document.getElementById('key-set');
+  if(!inp||!set)return;
+  if(finnhubKey){
+    inp.style.display='none';set.style.display='block';
+    const masked='•••• •••• '+finnhubKey.slice(-4);
+    document.getElementById('key-masked').textContent=masked;
+  }else{
+    inp.style.display='block';set.style.display='none';
+    document.getElementById('finnhub-key').value='';
+  }
+}
+function changeKey(){finnhubKey='';document.getElementById('key-input').style.display='block';document.getElementById('key-set').style.display='none';const f=document.getElementById('finnhub-key');f.value='';f.focus()}
+function removeKey(){finnhubKey='';save('pln_finnhub','');renderKeyUI();renderStocks();const st=document.getElementById('bors-status');if(st)st.textContent='Nyckel borttagen. Visar sparade värden.'}
 function stockRowInner(s){
   const up=s.change>=0;
   return '<div style="display:flex;justify-content:space-between;align-items:center"><div><div class="stock-name">'+esc(s.name)+(s.live?'<span class="badge-live">live</span>':'<span class="badge-man">man</span>')+'</div><div class="stock-ticker">'+esc(s.symbol)+'</div></div><div style="text-align:right"><div class="stock-price">'+Number(s.price).toLocaleString('sv-SE',{maximumFractionDigits:2})+'</div><div class="stock-change '+(up?'up':'down')+'">'+(up?'▲':'▼')+' '+Math.abs(s.change).toFixed(2)+'%</div></div></div>';
 }
-function saveKey(){finnhubKey=document.getElementById('finnhub-key').value.trim();save('pln_finnhub',finnhubKey);refreshStocks(true)}
+function saveKey(){finnhubKey=document.getElementById('finnhub-key').value.trim();save('pln_finnhub',finnhubKey);renderKeyUI();refreshStocks(true)}
 function addStock(){
   const n=document.getElementById('stk-name').value.trim();
   const sym=document.getElementById('stk-symbol').value.trim().toUpperCase();
@@ -377,13 +401,14 @@ async function refreshStocks(force){
 function renderGoals(){
   const render=(list,elId)=>{
     document.getElementById(elId).innerHTML=list.length
-      ?list.map(g=>'<div class="goal-item"><div class="goal-check'+(g.done?' done':'')+'" onclick="toggleGoal(\''+g.id+'\')">'+(g.done?'✓':'')+'</div><span class="goal-text'+(g.done?' done':'')+'">'+esc(g.title)+'</span><span class="goal-badge '+g.type+'">'+(g.type==='short'?'Kort':'Lång')+'</span></div>').join('')
+      ?list.map(g=>'<div class="goal-item"><div class="goal-check'+(g.done?' done':'')+'" onclick="toggleGoal(\''+g.id+'\')">'+(g.done?'✓':'')+'</div><span class="goal-text'+(g.done?' done':'')+'">'+esc(g.title)+'</span><span class="goal-badge '+g.type+'">'+(g.type==='short'?'Kort':'Lång')+'</span><span class="del-btn" onclick="deleteGoal(\''+g.id+'\')">×</span></div>').join('')
       :'<div class="empty">Inga mål ännu</div>';
   };
   render(goals.filter(g=>g.type==='short'),'short-goals-list');
   render(goals.filter(g=>g.type==='long'),'long-goals-list');
 }
 function toggleGoal(id){const g=goals.find(g=>g.id===id);if(g){g.done=!g.done;save('pln_goals',goals);renderGoals();renderHem()}}
+function deleteGoal(id){goals=goals.filter(g=>g.id!==id);save('pln_goals',goals);renderGoals();renderHem()}
 function addGoal(){
   const t=document.getElementById('goal-title').value.trim();
   if(!t)return;
