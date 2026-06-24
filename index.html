@@ -26,10 +26,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
 .header{padding:12px 20px 8px;display:flex;align-items:center;justify-content:space-between}
 .header-title{font-size:28px;font-weight:700;letter-spacing:-0.5px}
 .header-date{font-size:13px;color:var(--text2);margin-top:2px}
-.content{flex:1;padding:0 16px;padding-bottom:calc(140px + var(--safe-bot));overflow-y:auto}
+.content{flex:1;padding:0 16px;padding-bottom:calc(150px + var(--safe-bot));overflow-y:auto}
 .panel{display:none}
 .panel.active{display:block}
-.section-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin:20px 0 10px}
+.section-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin:20px 0 10px;display:flex;align-items:center;justify-content:space-between}
+.section-title .link{font-size:12px;color:var(--accent);font-weight:600;cursor:pointer;text-transform:none;letter-spacing:0}
 .card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;border:0.5px solid var(--border)}
 .card-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)}
 .card-row:last-child{border-bottom:none;padding-bottom:0}
@@ -58,6 +59,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
 .stock-name{font-size:15px;font-weight:500}
 .stock-ticker{font-size:12px;color:var(--text2)}
 .stock-price{font-size:15px;font-weight:500;text-align:right}
+.badge-live{font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;background:#E1F5EE;color:#0F6E56;margin-left:6px;vertical-align:middle;text-transform:uppercase;letter-spacing:0.04em}
+.badge-man{font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;background:var(--bg3);color:var(--text2);margin-left:6px;vertical-align:middle;text-transform:uppercase;letter-spacing:0.04em}
 .goal-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--border)}
 .goal-item:last-child{border-bottom:none;padding-bottom:0}
 .goal-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;transition:all 0.2s}
@@ -73,14 +76,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
 .form-row input,.form-row select{margin-bottom:0}
 .btn-add{width:100%;padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
 .btn-add.green{background:var(--accent2)}
-.mail-item{padding:12px 0;border-bottom:0.5px solid var(--border)}
-.mail-item:last-child{border-bottom:none;padding-bottom:0}
-.mail-sender{font-size:13px;color:var(--text2);margin-bottom:2px}
-.mail-subject{font-size:15px;font-weight:500;color:var(--text)}
-.mail-preview{font-size:13px;color:var(--text2);margin-top:3px}
-.mail-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
-.mail-time{font-size:12px;color:var(--text3)}
-.filter-pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 10px;border-radius:10px;background:#E1F5EE;color:#0F6E56;margin-bottom:12px}
+.btn-ghost{width:100%;padding:11px;border-radius:12px;border:0.5px solid var(--border);background:var(--card);color:var(--text);font-size:14px;font-weight:600;cursor:pointer}
 .briefing-card{background:linear-gradient(135deg,#534AB7 0%,#1D9E75 100%);border-radius:20px;padding:20px;color:#fff;margin-bottom:16px}
 .briefing-card h2{font-size:22px;font-weight:700;margin-bottom:4px}
 .briefing-card p{font-size:14px;opacity:0.85}
@@ -90,23 +86,39 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
 .brief-stat-lbl{font-size:12px;opacity:0.85;margin-top:2px}
 .bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--bg);border-top:0.5px solid var(--border);display:flex;padding-bottom:calc(var(--safe-bot) + 50px);z-index:100}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:14px 0 10px;cursor:pointer;gap:3px;min-height:60px}
-.nav-item span{font-size:10px;color:var(--text2)}
-.nav-item svg{width:24px;height:24px;stroke:var(--text2);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.nav-item span{font-size:9.5px;color:var(--text2)}
+.nav-item svg{width:23px;height:23px;stroke:var(--text2);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .nav-item.active svg{stroke:var(--accent)}
 .nav-item.active span{color:var(--accent)}
 .empty{text-align:center;padding:24px 0;color:var(--text2);font-size:14px}
 .del-btn{color:var(--text3);font-size:22px;cursor:pointer;padding-left:10px;line-height:1}
+.help{font-size:12px;color:var(--text2);line-height:1.5}
+.help a{color:var(--accent)}
+/* Träning */
+.tr-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.tr-stat{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:14px}
+.tr-stat-val{font-size:26px;font-weight:700;color:var(--text)}
+.tr-stat-val small{font-size:14px;font-weight:600;color:var(--text2)}
+.tr-stat-lbl{font-size:12px;color:var(--text2);margin-top:2px}
+.tr-stat-diff{font-size:12px;font-weight:600;margin-top:4px}
+.tr-stat-diff.up{color:#1D9E75}.tr-stat-diff.down{color:#E24B4A}.tr-stat-diff.flat{color:var(--text2)}
+.chart{display:flex;align-items:flex-end;gap:6px;height:160px;padding-top:8px}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:5px}
+.chart-bar{width:100%;max-width:24px;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,#1D9E75,#16805f);min-height:3px;transition:height 0.4s ease}
+.chart-bar.cur{background:linear-gradient(180deg,#534AB7,#3f389a)}
+.chart-bar.empty{background:var(--bg3)}
+.chart-val{font-size:11px;font-weight:600;color:var(--text)}
+.chart-lbl{font-size:10px;color:var(--text3)}
 </style>
 </head>
 <body>
 <div class="app">
 <div class="statusbar"></div>
-
 <!-- HEM -->
 <div id="panel-hem" class="panel active">
   <div class="header">
     <div>
-      <div class="header-title">God morgon 👋</div>
+      <div class="header-title" id="hem-greeting">God morgon 👋</div>
       <div class="header-date" id="hem-date"></div>
     </div>
   </div>
@@ -125,7 +137,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
     <div class="card" id="hem-stocks"></div>
   </div>
 </div>
-
 <!-- KALENDER -->
 <div id="panel-kalender" class="panel">
   <div class="header"><div class="header-title">Kalender</div></div>
@@ -146,45 +157,36 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
       <input type="text" id="ev-title" placeholder="Titel, t.ex. Löpning 5 km">
       <div class="form-row">
         <input type="time" id="ev-time" value="07:00">
-        <select id="ev-type">
-          <option value="work">💼 Arbete</option>
-          <option value="gym">🏋️ Träning</option>
-          <option value="personal">📌 Personligt</option>
-        </select>
+        <select id="ev-type"></select>
       </div>
       <button class="btn-add" onclick="addEvent()">Lägg till</button>
     </div>
   </div>
 </div>
-
 <!-- BÖRS -->
 <div id="panel-bors" class="panel">
   <div class="header"><div class="header-title">Börs</div></div>
   <div class="content">
-    <div class="section-title">Marknadsöversikt</div>
+    <div class="section-title">Marknadsöversikt <span class="link" onclick="refreshStocks(true)" id="bors-refresh">↻ Uppdatera</span></div>
     <div class="card" id="stocks-full"></div>
-    <p style="font-size:12px;color:var(--text2);text-align:center;margin-top:8px">Uppdateras varje gång du öppnar appen</p>
-  </div>
-</div>
-
-<!-- MAIL -->
-<div id="panel-mail" class="panel">
-  <div class="header"><div class="header-title">Mail</div></div>
-  <div class="content">
-    <div class="filter-pill">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Reklam filtreras automatiskt
+    <p style="font-size:12px;color:var(--text2);text-align:center;margin-top:8px" id="bors-status"></p>
+    <div class="section-title">Inställningar</div>
+    <div class="add-form">
+      <div class="help" style="margin-bottom:10px">Klistra in din gratis <a href="https://finnhub.io/register" target="_blank" rel="noopener">Finnhub API-nyckel</a> för live-kurser. Gratisnivån täcker bäst amerikanska aktier &amp; ETF:er. Symboler utan live-data visar ditt senast sparade värde.</div>
+      <input type="text" id="finnhub-key" placeholder="Finnhub API-nyckel">
+      <button class="btn-add" onclick="saveKey()">Spara nyckel</button>
     </div>
-    <div class="card" id="mail-list"></div>
-    <div class="add-form" style="margin-top:12px">
-      <input type="text" id="mail-from" placeholder="Från">
-      <input type="text" id="mail-subject" placeholder="Ämne">
-      <input type="text" id="mail-preview" placeholder="Förhandsgranskning">
-      <button class="btn-add" onclick="addMail()">Lägg till mail</button>
+    <div class="section-title">Lägg till värdepapper</div>
+    <div class="add-form">
+      <input type="text" id="stk-name" placeholder="Namn, t.ex. Apple">
+      <div class="form-row">
+        <input type="text" id="stk-symbol" placeholder="Finnhub-symbol, t.ex. AAPL">
+        <input type="number" step="0.01" id="stk-price" placeholder="Pris (manuellt)">
+      </div>
+      <button class="btn-add green" onclick="addStock()">Lägg till</button>
     </div>
   </div>
 </div>
-
 <!-- MÅL -->
 <div id="panel-mal" class="panel">
   <div class="header"><div class="header-title">Mål</div></div>
@@ -204,7 +206,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
     </div>
   </div>
 </div>
-
 <!-- NAVBAR -->
 <nav class="bottomnav">
   <div class="nav-item active" id="nav-hem" onclick="showPanel('hem',this)">
@@ -219,51 +220,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
     <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     <span>Börs</span>
   </div>
-  <div class="nav-item" id="nav-mail" onclick="showPanel('mail',this)">
-    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    <span>Mail</span>
-  </div>
   <div class="nav-item" id="nav-mal" onclick="showPanel('mal',this)">
     <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
     <span>Mål</span>
   </div>
 </nav>
 </div>
-
 <script>
 const MONTHS=['Januari','Februari','Mars','April','Maj','Juni','Juli','Augusti','September','Oktober','November','December'];
+const MONTHS_S=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
 const DAYS=['Mån','Tis','Ons','Tor','Fre','Lör','Sön'];
-
+const TYPES={work:{label:'Arbete',emoji:'💼'},gym:{label:'Träning',emoji:'🏋️'},personal:{label:'Personligt',emoji:'📌'}};
 function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
-
 let events=load('pln_events',[]);
 let goals=load('pln_goals',[
   {id:uid(),title:'Träna 3 gånger denna vecka',type:'short',done:false},
   {id:uid(),title:'Springa ett maraton',type:'long',done:false},
 ]);
-let mails=load('pln_mails',[
-  {id:uid(),from:'Anna Lindström',subject:'Möte imorgon kl 10',preview:'Kan du bekräfta att mötet imorgon kl 10 är OK?',time:'08:42'},
-  {id:uid(),from:'Erik Persson',subject:'Rapport Q2 klar att granska',preview:'Bifogat hittar du Q2-rapporten, vänligen granska den.',time:'Igår'},
+let stocks=load('pln_stocks',[
+  {id:uid(),name:'Ericsson',symbol:'ERIC',price:7.10,change:1.2,live:false},
+  {id:uid(),name:'Apple',symbol:'AAPL',price:212.40,change:0.6,live:false},
+  {id:uid(),name:'S&P 500 (SPY)',symbol:'SPY',price:548.20,change:0.3,live:false},
+  {id:uid(),name:'OMX Stockholm 30',symbol:'OMXS30',price:2341,change:0.8,live:false},
+  {id:uid(),name:'Volvo B',symbol:'VOLV-B.ST',price:281.40,change:-0.4,live:false},
 ]);
-
-let stocks=[
-  {name:'OMX Stockholm 30',ticker:'OMXS30',price:2341,change:0.8},
-  {name:'Ericsson',ticker:'ERIC B',price:76.20,change:1.2},
-  {name:'Volvo B',ticker:'VOLV B',price:281.40,change:-0.4},
-  {name:'H&M B',ticker:'HM B',price:143.85,change:2.1},
-  {name:'SEB A',ticker:'SEB A',price:158.30,change:0.6},
-  {name:'S&P 500',ticker:'SPX',price:5482,change:0.3},
-  {name:'Dow Jones',ticker:'DJI',price:38652,change:-0.1},
-];
-
+let finnhubKey=load('pln_finnhub','')||'';
 let viewYear=new Date().getFullYear(),viewMonth=new Date().getMonth();
 let selDay=new Date().getDate(),selMonth=viewMonth,selYear=viewYear;
-
 function todayKey(){const d=new Date();return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()}
 function dayKey(y,m,d){return y+'-'+m+'-'+d}
-
 function showPanel(id,el){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -271,26 +258,34 @@ function showPanel(id,el){
   el.classList.add('active');
   if(id==='hem')renderHem();
   else if(id==='kalender')renderCal();
-  else if(id==='bors')renderStocks();
-  else if(id==='mail')renderMail();
+  else if(id==='bors'){renderStocks();refreshStocks(false)}
   else if(id==='mal')renderGoals();
 }
-
+function typeLabel(t){return TYPES[t]?TYPES[t].label:'Övrigt'}
+/* ---------- HEM ---------- */
+function greeting(h){
+  if(h>=5&&h<11)return 'God morgon ☀️';
+  if(h>=11&&h<18)return 'God eftermiddag 👋';
+  return 'God kväll 🌙';
+}
 function renderHem(){
   const now=new Date();
   const days=['söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag'];
+  document.getElementById('hem-greeting').textContent=greeting(now.getHours());
   document.getElementById('hem-date').textContent=days[now.getDay()]+' '+now.getDate()+' '+MONTHS[now.getMonth()].toLowerCase()+' '+now.getFullYear();
-  const todayEvs=events.filter(e=>e.date===todayKey());
+  const todayEvs=events.filter(e=>e.date===todayKey()).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   const active=goals.filter(g=>!g.done).length;
   document.getElementById('brief-events').textContent=todayEvs.length;
   document.getElementById('brief-goals').textContent=active;
   document.getElementById('brief-subtitle').textContent=todayEvs.length+' händelser idag · '+active+' aktiva mål';
   const ec=document.getElementById('hem-events-card');
-  ec.innerHTML=todayEvs.length?todayEvs.map(e=>'<div class="card-row"><div class="event-left"><div class="event-dot '+e.type+'"></div><div class="event-info"><p>'+e.title+'</p><span>'+(e.time||'')+'&nbsp;·&nbsp;'+(e.type==='work'?'Arbete':e.type==='gym'?'Träning':'Personligt')+'</span></div></div></div>').join(''):'<div class="empty">Inga händelser idag</div>';
-  document.getElementById('hem-stocks').innerHTML=stocks.slice(0,4).map(s=>'<div class="card-row"><div><div class="stock-name">'+s.name+'</div><div class="stock-ticker">'+s.ticker+'</div></div><div style="text-align:right"><div class="stock-price">'+s.price.toLocaleString('sv-SE')+'</div><div class="stock-change '+(s.change>=0?'up':'down')+'">'+(s.change>=0?'▲':'▼')+' '+Math.abs(s.change).toFixed(1)+'%</div></div></div>').join('');
+  ec.innerHTML=todayEvs.length?todayEvs.map(e=>'<div class="card-row"><div class="event-left"><div class="event-dot '+e.type+'"></div><div class="event-info"><p>'+esc(e.title)+'</p><span>'+(e.time||'')+'&nbsp;·&nbsp;'+typeLabel(e.type)+'</span></div></div></div>').join(''):'<div class="empty">Inga händelser idag</div>';
+  document.getElementById('hem-stocks').innerHTML=stocks.slice(0,4).map(stockRow).join('')||'<div class="empty">Inga värdepapper</div>';
 }
-
+/* ---------- KALENDER ---------- */
 function renderCal(){
+  const sel=document.getElementById('ev-type');
+  if(sel&&!sel.dataset.init){sel.innerHTML=Object.keys(TYPES).map(t=>'<option value="'+t+'">'+TYPES[t].emoji+' '+TYPES[t].label+'</option>').join('');sel.dataset.init='1'}
   document.getElementById('cal-headers').innerHTML=DAYS.map(d=>'<div class="cal-hdr">'+d+'</div>').join('');
   document.getElementById('cal-label').textContent=MONTHS[viewMonth]+' '+viewYear;
   const first=new Date(viewYear,viewMonth,1);
@@ -310,20 +305,17 @@ function renderCal(){
   document.getElementById('cal-grid').innerHTML=html;
   renderDayEvents();
 }
-
 function selectDay(d){selDay=d;selMonth=viewMonth;selYear=viewYear;renderCal()}
 function prevMonth(){viewMonth===0?(viewMonth=11,viewYear--):viewMonth--;renderCal()}
 function nextMonth(){viewMonth===11?(viewMonth=0,viewYear++):viewMonth++;renderCal()}
-
 function renderDayEvents(){
   const k=dayKey(selYear,selMonth,selDay);
   document.getElementById('sel-day-label').textContent=selDay+' '+MONTHS[selMonth];
-  const evs=events.filter(e=>e.date===k);
+  const evs=events.filter(e=>e.date===k).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   document.getElementById('day-events').innerHTML=evs.length
-    ?'<div class="card">'+evs.map(e=>'<div class="card-row"><div class="event-left"><div class="event-dot '+e.type+'"></div><div class="event-info"><p>'+e.title+'</p><span>'+(e.time||'')+'&nbsp;·&nbsp;'+(e.type==='work'?'Arbete':e.type==='gym'?'Träning':'Personligt')+'</span></div></div><span class="del-btn" onclick="deleteEvent(\''+e.id+'\')">×</span></div>').join('')+'</div>'
+    ?'<div class="card">'+evs.map(e=>'<div class="card-row"><div class="event-left"><div class="event-dot '+e.type+'"></div><div class="event-info"><p>'+esc(e.title)+'</p><span>'+(e.time||'')+'&nbsp;·&nbsp;'+typeLabel(e.type)+'</span></div></div><span class="del-btn" onclick="deleteEvent(\''+e.id+'\')">×</span></div>').join('')+'</div>'
     :'<div class="card"><div class="empty">Inga händelser</div></div>';
 }
-
 function addEvent(){
   const t=document.getElementById('ev-title').value.trim();
   if(!t)return;
@@ -332,44 +324,66 @@ function addEvent(){
   document.getElementById('ev-title').value='';
   renderCal();renderHem();
 }
-
 function deleteEvent(id){events=events.filter(e=>e.id!==id);save('pln_events',events);renderCal();renderHem()}
-
+/* ---------- BÖRS ---------- */
+function stockRow(s){
+  const up=s.change>=0;
+  return '<div class="card-row"><div><div class="stock-name">'+esc(s.name)+(s.live?'<span class="badge-live">live</span>':'<span class="badge-man">man</span>')+'</div><div class="stock-ticker">'+esc(s.symbol)+'</div></div><div style="text-align:right"><div class="stock-price">'+Number(s.price).toLocaleString('sv-SE',{maximumFractionDigits:2})+'</div><div class="stock-change '+(up?'up':'down')+'">'+(up?'▲':'▼')+' '+Math.abs(s.change).toFixed(2)+'%</div></div></div>';
+}
 function renderStocks(){
-  document.getElementById('stocks-full').innerHTML=stocks.map(s=>'<div class="card-row"><div><div class="stock-name">'+s.name+'</div><div class="stock-ticker">'+s.ticker+'</div></div><div style="text-align:right"><div class="stock-price">'+s.price.toLocaleString('sv-SE')+'</div><div class="stock-change '+(s.change>=0?'up':'down')+'">'+(s.change>=0?'▲':'▼')+' '+Math.abs(s.change).toFixed(1)+'%</div></div></div>').join('');
+  document.getElementById('stocks-full').innerHTML=stocks.map((s,i)=>
+    '<div class="card-row"><div style="flex:1">'+stockRowInner(s)+'</div><span class="del-btn" onclick="deleteStock(\''+s.id+'\')">×</span></div>'
+  ).join('')||'<div class="empty">Inga värdepapper</div>';
+  document.getElementById('finnhub-key').value=finnhubKey;
 }
-
-function renderMail(){
-  document.getElementById('mail-list').innerHTML=mails.length
-    ?mails.map(m=>'<div class="mail-item"><div class="mail-meta"><span class="mail-sender">'+m.from+'</span><span class="mail-time">'+m.time+'</span></div><div class="mail-subject">'+m.subject+'</div><div class="mail-preview">'+m.preview+'</div></div>').join('')
-    :'<div class="empty">Inga mail</div>';
+function stockRowInner(s){
+  const up=s.change>=0;
+  return '<div style="display:flex;justify-content:space-between;align-items:center"><div><div class="stock-name">'+esc(s.name)+(s.live?'<span class="badge-live">live</span>':'<span class="badge-man">man</span>')+'</div><div class="stock-ticker">'+esc(s.symbol)+'</div></div><div style="text-align:right"><div class="stock-price">'+Number(s.price).toLocaleString('sv-SE',{maximumFractionDigits:2})+'</div><div class="stock-change '+(up?'up':'down')+'">'+(up?'▲':'▼')+' '+Math.abs(s.change).toFixed(2)+'%</div></div></div>';
 }
-
-function addMail(){
-  const f=document.getElementById('mail-from').value.trim();
-  const s=document.getElementById('mail-subject').value.trim();
-  const p=document.getElementById('mail-preview').value.trim();
-  if(!f||!s)return;
-  mails.unshift({id:uid(),from:f,subject:s,preview:p,time:'Nu'});
-  save('pln_mails',mails);
-  document.getElementById('mail-from').value='';
-  document.getElementById('mail-subject').value='';
-  document.getElementById('mail-preview').value='';
-  renderMail();
+function saveKey(){finnhubKey=document.getElementById('finnhub-key').value.trim();save('pln_finnhub',finnhubKey);refreshStocks(true)}
+function addStock(){
+  const n=document.getElementById('stk-name').value.trim();
+  const sym=document.getElementById('stk-symbol').value.trim().toUpperCase();
+  const p=parseFloat(document.getElementById('stk-price').value)||0;
+  if(!n||!sym)return;
+  stocks.push({id:uid(),name:n,symbol:sym,price:p,change:0,live:false});
+  save('pln_stocks',stocks);
+  document.getElementById('stk-name').value='';document.getElementById('stk-symbol').value='';document.getElementById('stk-price').value='';
+  renderStocks();refreshStocks(true);
 }
-
+function deleteStock(id){stocks=stocks.filter(s=>s.id!==id);save('pln_stocks',stocks);renderStocks();renderHem()}
+async function refreshStocks(force){
+  const status=document.getElementById('bors-status');
+  if(!finnhubKey){if(status)status.textContent='Lägg till en Finnhub-nyckel nedan för live-kurser. Visar sparade värden.';return}
+  if(status)status.textContent='Hämtar live-kurser…';
+  let okCount=0;
+  await Promise.all(stocks.map(async s=>{
+    try{
+      const r=await fetch('https://finnhub.io/api/v1/quote?symbol='+encodeURIComponent(s.symbol)+'&token='+encodeURIComponent(finnhubKey));
+      if(!r.ok)throw 0;
+      const d=await r.json();
+      if(d&&typeof d.c==='number'&&d.c>0){s.price=d.c;s.change=typeof d.dp==='number'?d.dp:0;s.live=true;okCount++}
+      else{s.live=false}
+    }catch{s.live=false}
+  }));
+  save('pln_stocks',stocks);
+  renderStocks();renderHem();
+  if(status){
+    const t=new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+    status.textContent=okCount+' av '+stocks.length+' live · uppdaterad '+t;
+  }
+}
+/* ---------- MÅL ---------- */
 function renderGoals(){
   const render=(list,elId)=>{
     document.getElementById(elId).innerHTML=list.length
-      ?list.map(g=>'<div class="goal-item"><div class="goal-check'+(g.done?' done':'')+'" onclick="toggleGoal(\''+g.id+'\')">'+(g.done?'✓':'')+'</div><span class="goal-text'+(g.done?' done':'\'")>'+g.title+'</span><span class="goal-badge '+g.type+'">'+(g.type==='short'?'Kort':'Lång')+'</span></div>').join('')
+      ?list.map(g=>'<div class="goal-item"><div class="goal-check'+(g.done?' done':'')+'" onclick="toggleGoal(\''+g.id+'\')">'+(g.done?'✓':'')+'</div><span class="goal-text'+(g.done?' done':'')+'">'+esc(g.title)+'</span><span class="goal-badge '+g.type+'">'+(g.type==='short'?'Kort':'Lång')+'</span></div>').join('')
       :'<div class="empty">Inga mål ännu</div>';
   };
   render(goals.filter(g=>g.type==='short'),'short-goals-list');
   render(goals.filter(g=>g.type==='long'),'long-goals-list');
 }
-
 function toggleGoal(id){const g=goals.find(g=>g.id===id);if(g){g.done=!g.done;save('pln_goals',goals);renderGoals();renderHem()}}
-
 function addGoal(){
   const t=document.getElementById('goal-title').value.trim();
   if(!t)return;
@@ -378,9 +392,9 @@ function addGoal(){
   document.getElementById('goal-title').value='';
   renderGoals();renderHem();
 }
-
+/* ---------- util ---------- */
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 renderHem();
-renderStocks();
 </script>
 </body>
 </html>
